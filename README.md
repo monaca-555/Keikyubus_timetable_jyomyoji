@@ -26,8 +26,8 @@ data/timetable_inbound.json    時刻表データ(岐れ道→鎌倉駅方面。
   "via": "岐れ道",
   "generatedAt": "データ取得日",
   "routes": [
-    { "id": "kama2", "code": "鎌2", "destination": "梶原", "color": "#e4572e" }
-    // ... 岐れ道を通る全系統を列挙
+    { "id": "kama2", "code": "鎌2", "destination": "梶原", "color": "#e4572e", "platform": "5" }
+    // ... 岐れ道を通る全系統を列挙。platform は鎌倉駅ののりば番号(任意、凡例に表示。省略可)
   ],
   "schedule": {
     "weekday":  [ { "hour": 6, "departures": [ { "minute": 10, "route": "kama2" } ] } ],
@@ -39,6 +39,7 @@ data/timetable_inbound.json    時刻表データ(岐れ道→鎌倉駅方面。
 
 - `routes[].id` と `schedule.*[].departures[].route` を対応させる。
 - `routes[].color` は系統ごとのバッジ色(視認性のため、色だけでなく系統番号のテキストも必ず表示される)。
+- `routes[].platform` は鎌倉駅ののりば番号(任意)。指定すると凡例に「◯番のりば」と表示される。岐れ道発側は不要なので省略している。
 - 時間帯(`hour`)がない/`departures` が空の時間帯は「運行なし」と表示される。
 
 データ取得元: 京急バス公式サイト (https://www.keikyu-bus.co.jp/ , https://timetablenavi.keikyu-bus.co.jp/) の鎌倉駅のりば案内・各系統時刻表。岐れ道を通過する系統はのりば案内や路線図で洩れなく確認すること。

@@ -204,15 +204,22 @@ body {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 6px 12px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px 12px;
 }
 
 .legend li {
   display: flex;
   align-items: center;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 4px 6px;
   font-size: 0.85rem;
+}
+
+.legend .platform {
+  font-size: 0.72rem;
+  color: var(--sub-ink);
+  white-space: nowrap;
 }
 
 .legend .badge {

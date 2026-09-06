@@ -35,7 +35,8 @@ function renderBoard(data) {
   legendList.innerHTML = "";
   for (const route of data.routes) {
     const li = document.createElement("li");
-    li.innerHTML = `<span class="badge" style="--dep-color:${route.color}">${route.code}</span><span>${route.destination}</span>`;
+    const platform = route.platform ? `<span class="platform">${route.platform}番のりば</span>` : "";
+    li.innerHTML = `<span class="badge" style="--dep-color:${route.color}">${route.code}</span><span>${route.destination}</span>${platform}`;
     legendList.appendChild(li);
   }
 
@@ -59,7 +60,9 @@ function renderBoard(data) {
         const span = document.createElement("span");
         span.className = "dep";
         span.style.setProperty("--dep-color", route.color);
-        span.title = `${route.code} ${route.destination}`;
+        span.title = route.platform
+          ? `${route.code} ${route.destination}(${route.platform}番のりば)`
+          : `${route.code} ${route.destination}`;
         span.innerHTML = `<span class="dep-dot"></span>${String(dep.minute).padStart(2, "0")}`;
         minutesTd.appendChild(span);
       }
