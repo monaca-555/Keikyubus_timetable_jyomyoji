@@ -4,13 +4,30 @@ const DAY_LABELS = {
   holiday: "日曜・祝日",
 };
 
-async function main() {
-  const res = await fetch("data/timetable.json");
-  const data = await res.json();
+const DATA_SOURCES = {
+  outbound: "data/timetable.json",
+  inbound: "data/timetable_inbound.json",
+};
 
+const dataCache = {};
+let currentDirection = "outbound";
+let currentDay = "weekday";
+let renderDay = () => {};
+
+async function loadData(direction) {
+  if (!dataCache[direction]) {
+    const res = await fetch(DATA_SOURCES[direction]);
+    dataCache[direction] = await res.json();
+  }
+  return dataCache[direction];
+}
+
+function renderBoard(data) {
   const routeById = Object.fromEntries(data.routes.map((r) => [r.id, r]));
 
   document.title = `${data.stop} 発 ${data.via}方面 バス時刻表(統合)`;
+  document.getElementById("stop-name").textContent = data.stop;
+  document.getElementById("via-name").textContent = `${data.via} 方面`;
   document.getElementById("notice").textContent = data.note;
   document.getElementById("updated").textContent = `データ更新: ${data.generatedAt}`;
 
@@ -22,10 +39,8 @@ async function main() {
     legendList.appendChild(li);
   }
 
-  const tabs = Array.from(document.querySelectorAll(".tab"));
   const body = document.getElementById("timetable-body");
-
-  function renderDay(key) {
+  renderDay = (key) => {
     const rows = data.schedule[key] || [];
     body.innerHTML = "";
     for (const row of rows) {
@@ -44,28 +59,55 @@ async function main() {
         const span = document.createElement("span");
         span.className = "dep";
         span.style.setProperty("--dep-color", route.color);
-        span.innerHTML = `<span class="badge">${route.code}</span>${String(dep.minute).padStart(2, "0")}`;
+        span.title = `${route.code} ${route.destination}`;
+        span.innerHTML = `<span class="dep-dot"></span>${String(dep.minute).padStart(2, "0")}`;
         minutesTd.appendChild(span);
       }
       tr.appendChild(minutesTd);
 
       body.appendChild(tr);
     }
-  }
+  };
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      tabs.forEach((t) => {
+  renderDay(currentDay);
+}
+
+async function showDirection(direction) {
+  currentDirection = direction;
+  const data = await loadData(direction);
+  renderBoard(data);
+}
+
+async function main() {
+  await showDirection(currentDirection);
+
+  const directionTabs = Array.from(document.querySelectorAll("#direction-tabs .tab"));
+  directionTabs.forEach((tab) => {
+    tab.addEventListener("click", async () => {
+      if (tab.dataset.direction === currentDirection) return;
+      directionTabs.forEach((t) => {
         t.classList.remove("is-active");
         t.setAttribute("aria-selected", "false");
       });
       tab.classList.add("is-active");
       tab.setAttribute("aria-selected", "true");
-      renderDay(tab.dataset.key);
+      await showDirection(tab.dataset.direction);
     });
   });
 
-  renderDay("weekday");
+  const dayTabs = Array.from(document.querySelectorAll("#tabs .tab"));
+  dayTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      dayTabs.forEach((t) => {
+        t.classList.remove("is-active");
+        t.setAttribute("aria-selected", "false");
+      });
+      tab.classList.add("is-active");
+      tab.setAttribute("aria-selected", "true");
+      currentDay = tab.dataset.key;
+      renderDay(currentDay);
+    });
+  });
 }
 
 main().catch((err) => {

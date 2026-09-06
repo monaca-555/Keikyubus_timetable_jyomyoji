@@ -108,6 +108,21 @@ body {
   color: var(--tab-active-ink);
 }
 
+.direction-tabs {
+  margin-bottom: 16px;
+}
+
+.direction-tabs .tab {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: transparent;
+}
+
+.direction-tabs .tab.is-active {
+  background: var(--accent);
+  color: #fff;
+}
+
 .timetable {
   width: 100%;
   border-collapse: collapse;
@@ -158,22 +173,19 @@ body {
 
 .dep {
   display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
+  align-items: center;
+  gap: 4px;
   font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
 }
 
-.dep .badge {
+.dep-dot {
   display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
   background: var(--dep-color, #444);
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 3px;
-  transform: translateY(-3px);
+  flex: none;
 }
 
 .legend {
