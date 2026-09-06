@@ -1,0 +1,241 @@
+:root {
+  color-scheme: light;
+  --board-bg: #fffdf6;
+  --board-border: #2b2b2b;
+  --ink: #1a1a1a;
+  --sub-ink: #555555;
+  --accent: #0a5c36;
+  --row-alt: #f4f1e6;
+  --notice-bg: #fff3cd;
+  --notice-border: #e0a800;
+  --tab-bg: #e9e4d0;
+  --tab-active-bg: #2b2b2b;
+  --tab-active-ink: #fffdf6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 12px 48px;
+  background: #dedad0;
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  color: var(--ink);
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  width: 100%;
+  max-width: 720px;
+  background: var(--board-bg);
+  border: 3px solid var(--board-border);
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.board-header {
+  border-bottom: 3px solid var(--board-border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.stop-line {
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stop-name {
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 4px;
+}
+
+.arrow {
+  color: var(--sub-ink);
+}
+
+.via-name {
+  color: var(--accent);
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  color: var(--sub-ink);
+}
+
+.notice {
+  background: var(--notice-bg);
+  border: 1px solid var(--notice-border);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.tab {
+  flex: 1;
+  padding: 8px 4px;
+  border: 2px solid var(--board-border);
+  background: var(--tab-bg);
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tab.is-active {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-ink);
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.timetable th,
+.timetable td {
+  border: 1px solid var(--board-border);
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.timetable thead th {
+  background: var(--board-border);
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.hour-col {
+  width: 52px;
+  text-align: center;
+}
+
+.timetable td.hour {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: var(--row-alt);
+}
+
+.timetable tbody tr:nth-child(odd) td.minutes {
+  background: var(--row-alt);
+}
+
+.minutes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.minutes:empty::after {
+  content: "運行なし";
+  color: var(--sub-ink);
+  font-size: 0.8rem;
+}
+
+.dep {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dep .badge {
+  display: inline-block;
+  background: var(--dep-color, #444);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transform: translateY(-3px);
+}
+
+.legend {
+  margin-top: 20px;
+  border-top: 3px solid var(--board-border);
+  padding-top: 12px;
+}
+
+.legend h2 {
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+}
+
+.legend ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 6px 12px;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.legend .badge {
+  background: var(--dep-color, #444);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex: none;
+}
+
+.updated {
+  margin-top: 16px;
+  text-align: right;
+  font-size: 0.7rem;
+  color: var(--sub-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #14140f;
+  }
+  :root {
+    --board-bg: #1f1e18;
+    --ink: #f2efe4;
+    --sub-ink: #b8b4a4;
+    --row-alt: #2a291f;
+    --tab-bg: #3a382a;
+    --tab-active-bg: #f2efe4;
+    --tab-active-ink: #1f1e18;
+    --notice-bg: #3a2f10;
+    --notice-border: #d1a233;
+  }
+  .timetable thead th {
+    background: #3a382a;
+  }
+}
