@@ -31,6 +31,13 @@ function renderBoard(data) {
   document.getElementById("notice").textContent = data.note;
   document.getElementById("updated").textContent = `データ更新: ${data.generatedAt}`;
 
+  const hasPlatform = data.routes.some((r) => r.platform);
+  const platformNote = document.getElementById("platform-note");
+  platformNote.textContent = hasPlatform
+    ? `丸数字は${data.stop}ののりば番号です。`
+    : "";
+  platformNote.hidden = !hasPlatform;
+
   const legendList = document.getElementById("legend-list");
   legendList.innerHTML = "";
   for (const route of data.routes) {
