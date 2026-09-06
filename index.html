@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鎌倉駅 発 岐れ路方面 バス時刻表(統合)</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="board">
+    <header class="board-header">
+      <div class="stop-line">
+        <span class="stop-name">鎌倉駅</span>
+        <span class="arrow">→</span>
+        <span class="via-name">岐れ路 方面</span>
+      </div>
+      <p class="subtitle">岐れ路バス停を通る全系統をまとめた時刻表です</p>
+    </header>
+
+    <p class="notice" id="notice"></p>
+
+    <div class="tabs" id="tabs" role="tablist">
+      <button type="button" class="tab is-active" data-key="weekday" role="tab" aria-selected="true">平日</button>
+      <button type="button" class="tab" data-key="saturday" role="tab" aria-selected="false">土曜</button>
+      <button type="button" class="tab" data-key="holiday" role="tab" aria-selected="false">日曜・祝日</button>
+    </div>
+
+    <table class="timetable">
+      <thead>
+        <tr>
+          <th class="hour-col">時</th>
+          <th>分(系統 / 発車時刻)</th>
+        </tr>
+      </thead>
+      <tbody id="timetable-body"></tbody>
+    </table>
+
+    <section class="legend">
+      <h2>系統一覧</h2>
+      <ul id="legend-list"></ul>
+    </section>
+
+    <footer class="updated" id="updated"></footer>
+  </main>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
