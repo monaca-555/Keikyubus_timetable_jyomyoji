@@ -10,7 +10,7 @@ const DATA_SOURCES = {
 };
 
 const dataCache = {};
-let currentDirection = "outbound";
+let currentDirection = "inbound";
 let currentDay = "weekday";
 let renderDay = () => {};
 
