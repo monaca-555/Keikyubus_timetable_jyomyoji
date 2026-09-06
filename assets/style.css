@@ -180,12 +180,24 @@ body {
 }
 
 .dep-dot {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 10px;
   height: 10px;
   border-radius: 2px;
   background: var(--dep-color, #444);
+  color: #fff;
   flex: none;
+}
+
+.dep-dot--platform {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .legend {

@@ -63,7 +63,9 @@ function renderBoard(data) {
         span.title = route.platform
           ? `${route.code} ${route.destination}(${route.platform}番のりば)`
           : `${route.code} ${route.destination}`;
-        span.innerHTML = `<span class="dep-dot"></span>${String(dep.minute).padStart(2, "0")}`;
+        const dotClass = route.platform ? "dep-dot dep-dot--platform" : "dep-dot";
+        const dotContent = route.platform || "";
+        span.innerHTML = `<span class="${dotClass}">${dotContent}</span>${String(dep.minute).padStart(2, "0")}`;
         minutesTd.appendChild(span);
       }
       tr.appendChild(minutesTd);
